@@ -39,6 +39,12 @@ class DatabaseHelper extends DbHelperAb {
           )
         ''');
       },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          // Add the `isSynced` column
+          await db.execute('ALTER TABLE tasks ADD COLUMN isSynced INTEGER DEFAULT 0');
+        }
+      },
     );
   }
 
