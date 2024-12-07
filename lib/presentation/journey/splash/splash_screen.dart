@@ -81,8 +81,6 @@ class _SplashScreenState extends State<SplashScreen>
                   // height: 200.0, // Set the initial height for the image
                   width: Dimen.dimen_230.w,
                   height: Dimen.dimen_80.h),
-              
-              
               Text("TODO APP",style: AppStyle.textStyle12(),)
             ],
           ),

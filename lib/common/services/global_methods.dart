@@ -6,8 +6,9 @@ import 'package:todo_app/common/ui/theme/app_color.dart';
 
 
 class GlobalMethod {
+
   static void showErrorDialog(
-      {required String error, required BuildContext ctx}) {
+      {required String error, String ? title, required BuildContext ctx}) {
     showDialog(
         context: ctx,
         builder: (context) {
@@ -24,7 +25,7 @@ class GlobalMethod {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: const Text(
+                  child:  Text(title ??
                     'Error occured ',
                   ),
                 ),

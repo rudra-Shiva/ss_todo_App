@@ -14,3 +14,7 @@ abstract class UseCase<Type, Params> {
 abstract class UseCaseTask<Type, Params> {
   Future<Either<AppError, Type>> call(Params params, String param);
 }
+
+abstract class UseCase1<Type, Params> {
+  Future<Either<String, Type>> call(Params params);
+}

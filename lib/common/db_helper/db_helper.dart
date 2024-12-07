@@ -15,6 +15,7 @@ class DatabaseHelper extends DbHelperAb {
 
     _database = await initDatabase();
     return _database;
+
   }
 
   @override

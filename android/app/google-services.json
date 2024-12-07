@@ -1,51 +1,13 @@
 {
   "project_info": {
-    "project_number": "771933606298",
-    "project_id": "rudraappatul",
-    "storage_bucket": "rudraappatul.appspot.com"
+    "project_number": "240064985886",
+    "project_id": "ss-todo-app",
+    "storage_bucket": "ss-todo-app.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:771933606298:android:751d13788474d32e54aa23",
-        "android_client_info": {
-          "package_name": "com.example.todo_firebase"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAOWgt4V5_M7jDoCLSdQhb58zy9LlkzYew"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:771933606298:android:43732ea69eb685a054aa23",
-        "android_client_info": {
-          "package_name": "com.learning.todo.learning_todo"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAOWgt4V5_M7jDoCLSdQhb58zy9LlkzYew"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:771933606298:android:3043bd24001ca19654aa23",
+        "mobilesdk_app_id": "1:240064985886:android:940e336de4e31fb96a670f",
         "android_client_info": {
           "package_name": "com.todo.todo_app"
         }
@@ -53,26 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAOWgt4V5_M7jDoCLSdQhb58zy9LlkzYew"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:771933606298:android:0a523b1167048b3b54aa23",
-        "android_client_info": {
-          "package_name": "com.todo.todo_apps"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAOWgt4V5_M7jDoCLSdQhb58zy9LlkzYew"
+          "current_key": "AIzaSyDr7Ojo93eWYKXP2OKrUOfKff9nlKMHzSM"
         }
       ],
       "services": {

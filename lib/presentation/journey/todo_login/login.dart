@@ -71,8 +71,9 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
         var aa = await _auth.signInWithEmailAndPassword(
             email: _emailTextController.text.trim().toLowerCase(),
             password: _passTextController.text.trim());
-        print(aa);
-        print("*******************************************************************                                                                                                                                                                                           ");
+
+        fetchUserData();
+        print("*******************************$aa************************************");
         Navigator.canPop(context) ? Navigator.pop(context) : null;
         Navigator.pushNamed(context, RouteList.mainRoute);
       } catch (errorrr) {
@@ -86,6 +87,24 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     setState(() {
       _isLoading = false;
     });
+  }
+  void fetchUserData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      print('UID: ${user.uid}');
+      print('Email: ${user.email}');
+      print('Display Name: ${user.displayName}');
+      print('Photo URL: ${user.photoURL}');
+      print('Tenant ID: ${user.tenantId}');
+      print('Provider Data:');
+      for (UserInfo info in user.providerData) {
+        print('  Provider ID: ${info.uid}');
+        print('  Email: ${info.email}');
+      }
+    } else {
+      print('No user is currently signed in.');
+    }
   }
 
   @override
@@ -111,191 +130,220 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           padding: const EdgeInsets.symmetric(
             horizontal: 16,
           ),
-          child: ListView(
-            children: [
-              SizedBox(
-                height: size.height * 0.1,
-              ),
-              Text(
-                'Login',
-                style: TextStyle(
-                    color: AppColor.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Don\'t have an account',
-                      style: TextStyle(
-                          color: AppColor.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    ),
-                    TextSpan(text: '    '),
-                    TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        // ..onTap = () =>
-                            // Navigator.push(
-                            //   context,
-                              // MaterialPageRoute(
-                              //   // builder: (context) => SignUp(),
-                              // ),
-                            // ),
-                    //   text: 'Register',
-                    //   style: TextStyle(
-                    //       decoration: TextDecoration.underline,
-                    //       color: Colors.blue.shade300,
-                    //       fontWeight: FontWeight.bold,
-                    //       fontSize: 16),
-                     ),
-                  ],
+          child: SizedBox(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: size.height * 0.1,
                 ),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Form(
-                key: _loginFormKey,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      textInputAction: TextInputAction.next,
-                      onEditingComplete: () =>
-                          FocusScope.of(context).requestFocus(_passFocusNode),
-                      keyboardType: TextInputType.emailAddress,
-                      controller: _emailTextController,
-                      validator: (value) {
-                        if (value!.isEmpty || !value.contains("@")) {
-                          return "Please enter a valid Email adress";
-                        } else {
-                          return null;
-                        }
-                      },
-                      style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(
-                        hintText: 'Email',
-                        hintStyle: TextStyle(color: AppColor.black),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                        ),
-                        errorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    //Password
-
-                    TextFormField(
-                      focusNode: _passFocusNode,
-                      obscureText: _obscureText,
-                      keyboardType: TextInputType.visiblePassword,
-                      controller: _passTextController,
-                      validator: (value) {
-                        if (value!.isEmpty || value.length < 5) {
-                          return "Please enter a valid password";
-                        } else {
-                          return null;
-                        }
-                      },
-                      style: TextStyle(color:  AppColor.black),
-                      decoration: InputDecoration(
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _obscureText = !_obscureText;
-                            });
-                          },
-                          child: Icon(
-                            _obscureText
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: Colors.black,
-                          ),
-                        ),
-                        hintText: 'Password',
-                        hintStyle: TextStyle(color:  AppColor.black),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                        ),
-                        errorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red),
-                        ),
-                      ),
-                    ),
-                  ],
+                Text(
+                  'Login',
+                  style: TextStyle(
+                      color: AppColor.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30),
                 ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ForgetPasswordScreen(),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    'Forget password?',
-                    style: TextStyle(
-                        color: AppColor.black,
-                        fontSize: 17,
-                        decoration: TextDecoration.underline,
-                        fontStyle: FontStyle.italic),
-                  ),
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              MaterialButton(
-                onPressed: _submitFormOnLogin,
-                color:  AppColor.greenColor4,
-                elevation: 8,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(13)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                RichText(
+                  text: TextSpan(
                     children: [
-                      Text(
-                        'Login',
+                      TextSpan(
+                        text: 'Don\'t have an account',
                         style: TextStyle(
-                            color:  AppColor.white,
+                            color: AppColor.black,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20),
+                            fontSize: 16),
                       ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Icon(
-                        Icons.login,
-                        color:  AppColor.white,
-                      ),
+                      TextSpan(text: '    '),
+                      TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = ()  => Navigator.pushNamed(context, RouteList.registerRoute),
+
+                        //Comment for reference
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => SignUp(),
+                              //   ),
+                              // ),
+                        text: 'Register',
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.blue.shade300,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                       ),
                     ],
                   ),
                 ),
-              )
-            ],
+                SizedBox(
+                  height: 40.h,
+                ),
+                Expanded(
+                  flex: 1,
+                  // height: ScreenUtil().setHeight(10),
+                  // color: Colors.white,
+                  child: Form(
+                    key: _loginFormKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextFormField(
+                              textInputAction: TextInputAction.next,
+                              onEditingComplete: () =>
+                                  FocusScope.of(context).requestFocus(_passFocusNode),
+                              keyboardType: TextInputType.emailAddress,
+                              controller: _emailTextController,
+                              validator: (value) {
+                                if (value!.isEmpty || !value.contains("@")) {
+                                  return "Please enter a valid Email adress";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              style: TextStyle(color: Colors.black),
+                              decoration: InputDecoration(
+                                hintText: 'Email',
+                                hintStyle: TextStyle(color: AppColor.black),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black),
+                                ),
+                                errorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.red),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            //Password
+
+                            TextFormField(
+                              focusNode: _passFocusNode,
+                              obscureText: _obscureText,
+                              keyboardType: TextInputType.visiblePassword,
+                              controller: _passTextController,
+                              validator: (value) {
+                                if (value!.isEmpty || value.length < 5) {
+                                  return "Please enter a valid password";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              style: TextStyle(color:  AppColor.black),
+                              decoration: InputDecoration(
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _obscureText = !_obscureText;
+                                    });
+                                  },
+                                  child: Icon(
+                                    _obscureText
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                hintText: 'Password',
+                                hintStyle: TextStyle(color:  AppColor.black),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black),
+                                ),
+                                errorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.red),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ForgetPasswordScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  'Forget password?',
+                                  style: TextStyle(
+                                      color: AppColor.black,
+                                      fontSize: 17,
+                                      decoration: TextDecoration.underline,
+                                      fontStyle: FontStyle.italic),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        Column(
+                          children: [
+
+
+                            Padding(
+                              padding: EdgeInsets.only(bottom: Dimen.dimen_50.h),
+
+                              child: MaterialButton(
+                                onPressed: _submitFormOnLogin,
+                                color:  AppColor.greenColor4,
+                                elevation: 8,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(13)),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 14),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Login',
+                                        style: TextStyle(
+                                            color:  AppColor.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Icon(
+                                        Icons.login,
+                                        color:  AppColor.white,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+
+
+              ],
+            ),
           ),
         ),
       ],

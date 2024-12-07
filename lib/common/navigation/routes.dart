@@ -8,6 +8,7 @@ import 'package:todo_app/presentation/journey/specific_task_screen/specific_task
 import 'package:todo_app/presentation/journey/splash/splash_screen.dart';
 import 'package:todo_app/presentation/journey/test/test.dart';
 import 'package:todo_app/presentation/journey/todo_login/login.dart';
+import 'package:todo_app/presentation/journey/todo_login/todo_user_register.dart';
 import 'package:todo_app/presentation/journey/todo_main_screen/todo_main_screen.dart';
 import 'package:todo_app/presentation/journey/todo_profile/todo_profile_main_screen.dart';
 import 'package:todo_app/presentation/journey/todo_setting/todo_setting_main_screen.dart';
@@ -28,6 +29,8 @@ class Routes{
         return _generateMaterialRoute(page: const ToDoMainScreen());
       case RouteList.loginRoute:
         return _generateMaterialRoute(page: const Login());
+      case RouteList.registerRoute:
+        return _generateMaterialRoute(page: const TodoUserRegister());
       case RouteList.allTaskDetails:
         return _generateMaterialRoute(page: const AllTaskScreen());
       case RouteList.searchTaskByNameOrStatus:
